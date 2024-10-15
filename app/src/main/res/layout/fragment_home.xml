@@ -6,12 +6,256 @@
     android:background="@color/lavander"
     tools:context=".HomeFragment">
 
+    <!-- Title -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="HomessKALBO"
+        android:layout_height="wrap_content"
+        android:text="PLMun Navigation"
+        android:textSize="25dp"
+        android:textColor="@color/black"
         android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/white"/>
+        android:layout_margin="20dp" />
+
+    <!-- Top Navigation -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_margin="50dp">
+
+        <!-- Building Button -->
+        <ImageButton
+            android:id="@+id/btn_building"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="5dp"
+            android:src="@drawable/baseline_business_24"
+            android:background="@drawable/round_button"
+            android:contentDescription="@string/building"
+            android:scaleType="fitCenter"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Rooms Button -->
+        <ImageButton
+            android:id="@+id/btn_rooms"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="5dp"
+            android:layout_marginStart="24dp"
+            android:src="@drawable/baseline_sensor_door_24"
+            android:background="@drawable/round_button"
+            android:contentDescription="@string/building"
+            android:scaleType="fitCenter"
+            android:clickable="true"
+            android:focusable="true"/>
+    </LinearLayout>
+
+    <!-- Fixed Search box -->
+    <EditText
+        android:id="@+id/search_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search for a building..."
+        android:padding="10dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginTop="130dp"
+        android:layout_gravity="top" />
+
+    <!-- Scrollable area for building info -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="4in"
+        android:layout_marginTop="180dp"
+        android:layout_weight="1"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="30dp">
+
+            <!-- First building section (RLRC) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_layout">
+
+                <!-- Left-side image -->
+                <ImageView
+                    android:id="@+id/img_rlrc"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/more_container"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/rlrc_image" />
+
+                <!-- Container for the two stacked More buttons -->
+                <LinearLayout
+                    android:id="@+id/more_container"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical">
+
+                    <!-- First More button -->
+                    <Button
+                        android:id="@+id/btn_more_top"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="More" />
+
+                    <!-- Second More button -->
+                    <Button
+                        android:id="@+id/btn_more_bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="More" />
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <!-- Second building section (DEL PILAR) -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_layout">
+
+                <!-- Left-side image -->
+                <ImageView
+                    android:id="@+id/img_rlrc1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/more_container1"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/rlrc_image" />
+
+                <!-- Container for the two stacked More buttons -->
+                <LinearLayout
+                    android:id="@+id/more_container1"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical">
+
+                    <!-- First More button -->
+                    <Button
+                        android:id="@+id/btn_more_top1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="More" />
+
+                    <!-- Second More button -->
+                    <Button
+                        android:id="@+id/btn_more_bottom1"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="More" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_layout">
+
+                <!-- Left-side image -->
+                <ImageView
+                    android:id="@+id/img_rlrc2"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/more_container2"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/rlrc_image" />
+
+                <!-- Container for the two stacked More buttons -->
+                <LinearLayout
+                    android:id="@+id/more_container2"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical">
+
+                    <!-- First More button -->
+                    <Button
+                        android:id="@+id/btn_more_top2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="More" />
+
+                    <!-- Second More button -->
+                    <Button
+                        android:id="@+id/btn_more_bottom2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="More" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/rounded_layout">
+
+                <!-- Left-side image -->
+                <ImageView
+                    android:id="@+id/img_rlrc3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@+id/more_container3"
+                    android:layout_weight="1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/rlrc_image" />
+
+                <!-- Container for the two stacked More buttons -->
+                <LinearLayout
+                    android:id="@+id/more_container3"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="vertical">
+
+                    <!-- First More button -->
+                    <Button
+                        android:id="@+id/btn_more_top3"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="More" />
+
+                    <!-- Second More button -->
+                    <Button
+                        android:id="@+id/btn_more_bottom3"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:text="More" />
+                </LinearLayout>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
