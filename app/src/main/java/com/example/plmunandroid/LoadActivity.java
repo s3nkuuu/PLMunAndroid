@@ -15,7 +15,7 @@ public class LoadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_load);
-        Log.d("MainActivity", "onCreate");
+        Log.d("Load Activity", "onCreate");
 
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
