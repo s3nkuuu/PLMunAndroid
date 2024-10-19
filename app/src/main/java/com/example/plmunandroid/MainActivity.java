@@ -1,5 +1,6 @@
 package com.example.plmunandroid;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -22,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Intent intent = new Intent(this, SignInActivity.class);
+        startActivity(intent);
 
         // Load the default HomeFragment when the app starts
         replaceFragment(new HomeFragment());
