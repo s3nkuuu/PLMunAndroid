@@ -1,17 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lavander"
-    tools:context=".ExploreFragment">
-
-    <TextView
+    android:background="@drawable/main_background">
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Explore"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/white"/>
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
+        android:columnCount="2"
+        android:rowCount="3"
+        tools:ignore="UselessParent">
 
-</FrameLayout>
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_row="0"
+            android:layout_rowWeight="0"
+            android:layout_columnSpan="2"
+            android:layout_columnWeight="1"
+            android:background="@android:color/transparent"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardElevation="0dp">
+
+            <LinearLayout
+                android:id="@+id/exploreBTN"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/globe"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="EXPLORE"
+                    android:textColor="#FFFFFF"
+                    android:textSize="48sp"
+                    android:textStyle="bold"
+                    tools:ignore="HardcodedText"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="48dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/plmun_layout"
+                tools:ignore="ContentDescription" />
+
+            <Button
+                android:id="@+id/grotto_btn1"
+                android:layout_width="50dp"
+                android:layout_height="150dp"
+                android:layout_gravity="top|left"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/invi_buttons"
+                android:text=""
+                android:visibility="visible"
+                tools:ignore="RtlHardcoded,SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/gymnasium_btn"
+                android:layout_width="110dp"
+                android:layout_height="150dp"
+                android:layout_gravity="top|left"
+                android:layout_marginLeft="80dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/invi_buttons"
+                android:text=""
+                android:visibility="visible"
+                tools:ignore="RtlHardcoded,SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/mabini_btn"
+                android:layout_width="50dp"
+                android:layout_height="150dp"
+                android:layout_gravity="top|right"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="85dp"
+                android:background="@drawable/invi_buttons"
+                android:text=""
+                android:visibility="visible"
+                tools:ignore="RtlHardcoded,SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/azotea_btn"
+                android:layout_width="50dp"
+                android:layout_height="150dp"
+                android:layout_gravity="top|right"
+                android:layout_marginTop="24dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/invi_buttons"
+                android:text=""
+                android:visibility="visible"
+                tools:ignore="RtlHardcoded,SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/rlrc_btn"
+                android:layout_width="70dp"
+                android:layout_height="350dp"
+                android:layout_gravity="center|left"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="110dp"
+                android:background="@drawable/invi_buttons"
+                android:text=""
+                android:visibility="visible"
+                tools:ignore="RtlHardcoded,SpeakableTextPresentCheck" />
+        </FrameLayout>
+    </GridLayout>
+</RelativeLayout>
