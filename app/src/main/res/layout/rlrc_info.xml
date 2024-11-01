@@ -31,11 +31,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/main_background"
+            android:paddingBottom="10dp"
             android:text="ACADEMIC BUILDING 4"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="12sp"
-            android:paddingBottom="10dp"
             tools:ignore="HardcodedText" />
 
         <LinearLayout
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="-10dp"
+                android:layout_marginTop="-20dp"
                 android:text="College of Medicine"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
@@ -67,10 +67,10 @@
         <View
             android:layout_width="380dp"
             android:layout_height="2dp"
-            android:background="@android:color/darker_gray"
+            android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
+            android:background="@android:color/darker_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -93,7 +93,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="-36dp"
-                android:text="Heroes Hall \n     Melchora Aquino Hall\n     Gabriela Silang Hall\n     Josefa Llanes Escoda Hall\n     Sultan Kudarat Hall\n     Gregorio Del Pilar Hall\n     GOMBURZA Hall\n     Antonio Luna Hall\n     Graciano Lopez-Jaena Hall"
+                android:text="Heroes Hall
+                \n      Melchora Aquino Hall
+                \n      Gabriela Silang Hall
+                \n      Josefa Llanes Escoda Hall
+                \n      Sultan Kudarat Hall
+                \n      Gregorio Del Pilar Hall
+                \n      GOMBURZA Hall
+                \n      Antonio Luna Hall
+                \n      Graciano Lopez-Jaena Hall"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 tools:ignore="HardcodedText" />
@@ -102,10 +110,10 @@
         <View
             android:layout_width="380dp"
             android:layout_height="2dp"
-            android:background="@android:color/darker_gray"
+            android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
+            android:background="@android:color/darker_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,9 +125,9 @@
             <TextView
                 android:layout_width="100sp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
                 android:text="2F"
                 android:textColor="@android:color/black"
-                android:layout_marginTop="70dp"
                 android:textSize="64sp"
                 tools:ignore="HardcodedText,TextSizeCheck" />
 
@@ -128,7 +136,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="-36dp"
-                android:text="CCTV Room and Security Office\nInstitute of Public Policy and-\nGovernance\nInstitute of Integrated-\nDevelopment Education\nCCJ Faculty and Dean's Office\nOffice of the VPREQALIA\nCollege of Graduate Studies\nHuman Resource Development-\nand Management Office\nGender and Development Office"
+                android:text="CCTV Room &amp; Security Office
+                \nInstitute of Public Policy &amp;\n    Governance
+                \nInstitute of Integrated\n    Development Education
+                \nCCJ Faculty &amp; Dean's Office
+                \nOffice of the VPREQALIA
+                \nCollege of Graduate Studies
+                \nHuman Resource Development\n     and Management Office
+                \nGender and Development Office"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 tools:ignore="HardcodedText" />
@@ -137,10 +152,10 @@
         <View
             android:layout_width="380dp"
             android:layout_height="2dp"
-            android:background="@android:color/darker_gray"
+            android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
+            android:background="@android:color/darker_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -162,7 +177,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="-36dp"
-                android:text="Innovation Hub\nUniversity Library Tambayan\nGeneral Services Office"
+                android:text="Innovation Hub
+                \nUniversity Library Tambayan
+                \nGeneral Services Office"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
                 tools:ignore="HardcodedText" />
@@ -174,6 +191,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:text="Close"
+            android:textSize="20dp"
             tools:ignore="HardcodedText,TouchTargetSizeCheck" />
     </LinearLayout>
 </ScrollView>

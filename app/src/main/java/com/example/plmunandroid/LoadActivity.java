@@ -3,9 +3,14 @@ package com.example.plmunandroid;
 import android.content.Intent;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 public class LoadActivity extends AppCompatActivity {
@@ -19,6 +24,12 @@ public class LoadActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, SignInActivity.class);
         startActivity(intent);
+
+        TextView exitMessage = findViewById(R.id.exitMessage);
+        exitMessage.setVisibility(View.VISIBLE);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        exitMessage.startAnimation(fadeIn);
+
 
         //loadingAnimation = new LoadingAnimation(this);
 

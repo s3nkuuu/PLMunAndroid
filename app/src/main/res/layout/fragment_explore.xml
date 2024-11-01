@@ -4,12 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_background">
+    android:background="@drawable/sign"
+    android:padding="16dp">
+
     <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_width="392dp"
+        android:layout_height="690dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
         android:columnCount="2"
         android:rowCount="3"
         tools:ignore="UselessParent">
@@ -48,7 +54,7 @@
                     android:textColor="#FFFFFF"
                     android:textSize="48sp"
                     android:textStyle="bold"
-                    tools:ignore="HardcodedText"/>
+                    tools:ignore="HardcodedText" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -120,6 +126,18 @@
                 android:layout_gravity="center|left"
                 android:layout_marginLeft="70dp"
                 android:layout_marginTop="110dp"
+                android:background="@drawable/invi_buttons"
+                android:text=""
+                android:visibility="visible"
+                tools:ignore="RtlHardcoded,SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/main_btn"
+                android:layout_width="100dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center|left"
+                android:layout_marginLeft="1.5in"
+                android:layout_marginTop="-50dp"
                 android:background="@drawable/invi_buttons"
                 android:text=""
                 android:visibility="visible"
