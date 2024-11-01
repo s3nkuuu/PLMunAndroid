@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@drawable/sign">
+    android:background="@drawable/sign"
+    android:padding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="20dp">
 
         <View
@@ -23,14 +23,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/lora_bold"
+            android:gravity="center"
             android:text="NavPLMun"
+            android:textColor="@color/white"
             android:textSize="32sp"
             android:textStyle="bold"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/lora_bold"
-            android:layout_marginBottom="24dp"
             tools:ignore="HardcodedText" />
 
         <View
@@ -41,27 +41,27 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign In"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
             android:fontFamily="@font/lora_bold"
             android:gravity="center"
-            android:layout_marginTop="24dp"
-            android:layout_gravity="center_horizontal"
-            tools:ignore="HardcodedText"
-            android:layout_marginBottom="24dp"/>
+            android:text="Sign In"
+            android:textColor="@color/white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            tools:ignore="HardcodedText" />
 
         <EditText
             android:id="@+id/studentNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Student Number"
-            android:inputType="text"
-            android:padding="12dp"
-            android:maxLength="8"
             android:layout_marginBottom="16dp"
             android:background="@drawable/edit_text_bg"
+            android:hint="Student Number"
+            android:inputType="text"
+            android:maxLength="8"
+            android:padding="12dp"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
 
@@ -69,11 +69,11 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/edit_text_bg"
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="12dp"
-            android:layout_marginBottom="24dp"
-            android:background="@drawable/edit_text_bg"
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
 
@@ -81,25 +81,25 @@
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign In"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:padding="12dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/border_button_state"
-            android:textColor="#004D24" />
+            android:padding="12dp"
+            android:text="Sign In"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:fontFamily="@font/open_sans_regular"
             android:text="@string/sign_upbtn"
             android:textColor="@android:color/white"
-            android:layout_gravity="center_horizontal"
-            android:fontFamily="@font/open_sans_regular"
-            android:clickable="true"
-            android:textStyle="italic"
-            android:layout_marginTop="16dp" />
+            android:textStyle="italic" />
 
     </LinearLayout>
 </ScrollView>

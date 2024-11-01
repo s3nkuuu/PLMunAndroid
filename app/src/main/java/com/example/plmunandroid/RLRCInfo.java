@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class RLRCInfo extends BottomSheetDialogFragment {
@@ -23,4 +24,3 @@ public class RLRCInfo extends BottomSheetDialogFragment {
         return view;
     }
 }
-

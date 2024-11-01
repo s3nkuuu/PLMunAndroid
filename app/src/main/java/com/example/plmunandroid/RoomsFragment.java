@@ -7,58 +7,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.tabs.TabLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RoomsFragment extends Fragment {
+
     private TabLayout tabLayout;
     private EditText searchBox;
-    private ImageButton filterButton;
-    private ChipGroup buildingFilterChips;
-    private List<Room> roomsList;
+    private View roomCard1, roomCard2, roomCard3, roomCard4, roomCard5;
+    private TextView noResultsText;
+    private ChipGroup chipGroup;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_rooms, container, false);
 
-        // Initialize views
         tabLayout = view.findViewById(R.id.tab_layout);
         searchBox = view.findViewById(R.id.search_box);
-        filterButton = view.findViewById(R.id.filter_button);
-        buildingFilterChips = view.findViewById(R.id.building_filter_chips);
+        roomCard1 = view.findViewById(R.id.library);
+        roomCard2 = view.findViewById(R.id.cl1);
+        roomCard3 = view.findViewById(R.id.heroeshall);
+        roomCard4 = view.findViewById(R.id.CITCSFaculty);
+        roomCard5 = view.findViewById(R.id.medical_clinic);
+        noResultsText = view.findViewById(R.id.no_results_text);
+        chipGroup = view.findViewById(R.id.chip_group);
 
-        // Initialize rooms list (replace with your actual data)
-        roomsList = new ArrayList<>();
-        roomsList.add(new Room("Room 301", "Computer Laboratory", "RLRC Building"));
-        roomsList.add(new Room("Room 302", "Science Laboratory", "RLRC Building"));
-        roomsList.add(new Room("Room 201", "Lecture Room", "GPB Building"));
-        // Add more rooms as needed
-
-        // Set up search functionality
-        searchBox.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                filterRooms(s.toString(), getSelectedBuilding());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {}
-        });
-
-        // Handle building filter selection
-        buildingFilterChips.setOnCheckedStateChangeListener((group, checkedIds) -> {
-            filterRooms(searchBox.getText().toString(), getSelectedBuilding());
-        });
-
-        // Set the Rooms tab as selected
+        // Rooms tab as selected
         if (tabLayout.getTabAt(1) != null) {
             tabLayout.getTabAt(1).select();
         }
@@ -76,53 +58,102 @@ public class RoomsFragment extends Fragment {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
+        // text change listener for search box
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterRooms(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // chip selection listener
+        chipGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            Chip chip = view.findViewById(checkedId);
+            if (chip != null) {
+                String selectedChipText = chip.getText().toString();
+                filterRoomsWithChips(selectedChipText);
+            }
         });
 
         return view;
     }
 
-    private String getSelectedBuilding() {
-        int checkedChipId = buildingFilterChips.getCheckedChipId();
-        if (checkedChipId == View.NO_ID) return "All Buildings";
-        // You'll need to implement this to return the selected building name
-        // based on the checked chip ID
-        return "All Buildings";
+    // Filter function to search for rooms
+    private void filterRooms(String query) {
+        query = query.toLowerCase().trim();
+
+        if (query.isEmpty()) {
+            // Show all rooms if the search query is empty
+            showAllRooms();
+            noResultsText.setVisibility(View.GONE);
+        } else {
+            // Filter by checking if the query matches any room name
+            roomCard1.setVisibility("library".contains(query) ? View.VISIBLE : View.GONE);
+            roomCard2.setVisibility("comlab1, cl1, computer laboratory 1".contains(query) ? View.VISIBLE : View.GONE);
+            roomCard3.setVisibility("heroes hall".contains(query) ? View.VISIBLE : View.GONE);
+            roomCard4.setVisibility("citcs faculty".contains(query) ? View.VISIBLE : View.GONE);
+            roomCard5.setVisibility("medical clinic, clinic".contains(query) ? View.VISIBLE : View.GONE);
+
+            // Check visibility of each card
+            boolean anyVisible = (roomCard1.getVisibility() == View.VISIBLE ||
+                    roomCard2.getVisibility() == View.VISIBLE ||
+                    roomCard3.getVisibility() == View.VISIBLE ||
+                    roomCard4.getVisibility() == View.VISIBLE ||
+                    roomCard5.getVisibility() == View.VISIBLE);
+
+            // Show or hide the no-results message based on anyVisible
+            noResultsText.setVisibility(anyVisible ? View.GONE : View.VISIBLE);
+        }
     }
 
-    private void filterRooms(String query, String selectedBuilding) {
-        List<Room> filteredList = new ArrayList<>();
-        for (Room room : roomsList) {
-            boolean matchesSearch = room.getName().toLowerCase().contains(query.toLowerCase()) ||
-                    room.getType().toLowerCase().contains(query.toLowerCase());
-            boolean matchesBuilding = selectedBuilding.equals("All Buildings") ||
-                    room.getBuilding().equals(selectedBuilding);
-
-            if (matchesSearch && matchesBuilding) {
-                filteredList.add(room);
-            }
+    // Filter function to handle room filtering based on selected chips
+    private void filterRoomsWithChips(String selectedChip) {
+        switch (selectedChip) {
+            case "All Buildings":
+                showAllRooms();
+                break;
+            case "RLRC":
+                roomCard1.setVisibility(View.VISIBLE);
+                roomCard2.setVisibility(View.GONE);
+                roomCard3.setVisibility(View.VISIBLE);
+                roomCard4.setVisibility(View.GONE);
+                roomCard5.setVisibility(View.GONE);
+                break;
+            case "Main":
+                roomCard1.setVisibility(View.GONE);
+                roomCard2.setVisibility(View.VISIBLE);
+                roomCard3.setVisibility(View.GONE);
+                roomCard4.setVisibility(View.VISIBLE);
+                roomCard5.setVisibility(View.VISIBLE);
+                break;
+            default:
+                showAllRooms();
+                break;
         }
-        // Update your UI with filtered rooms
-        // You'll need to implement this based on how you're displaying the rooms
     }
 
-    // Room model class
-    private static class Room {
-        private String name;
-        private String type;
-        private String building;
-
-        public Room(String name, String type, String building) {
-            this.name = name;
-            this.type = type;
-            this.building = building;
-        }
-
-        public String getName() { return name; }
-        public String getType() { return type; }
-        public String getBuilding() { return building; }
+    // function to show all room cards
+    private void showAllRooms() {
+        roomCard1.setVisibility(View.VISIBLE);
+        roomCard2.setVisibility(View.VISIBLE);
+        roomCard3.setVisibility(View.VISIBLE);
+        roomCard4.setVisibility(View.VISIBLE);
+        roomCard5.setVisibility(View.VISIBLE);
     }
 }
