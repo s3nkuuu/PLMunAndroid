@@ -4,5 +4,5 @@
     <string name="building">Building</string>
     <string name="rooms">Rooms</string>
     <string name="sign_inbtn">Already have an account? <u>Sign In</u></string>
-    <string name="sign_upbtn">Already have an account? <u>Sign Up</u></string>
+    <string name="sign_upbtn">Dont have an account? <u>Sign Up</u></string>
 </resources>

@@ -90,15 +90,69 @@
             android:textStyle="bold" />
 
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="20dp"
+            android:text="Or sign in with"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="-10dp">
+
+            <ImageView
+                android:id="@+id/btnGoogleSignIn"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/google_button_bg"
+                android:src="@drawable/ic_google"
+                android:padding="12dp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <ImageView
+                android:id="@+id/btnFacebookSignIn"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/facebook_button_bg"
+                android:src="@drawable/ic_facebook"
+                android:padding="12dp"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/withoutAcc"
+            android:layout_width="210dp"
+            android:layout_height="41dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/edit_text_bg"
+            android:padding="5dp"
+            android:text="Continue without an account"
+            android:textColor="@color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="12sp" />
+
+        <TextView
             android:id="@+id/tvSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="5dp"
             android:clickable="true"
             android:fontFamily="@font/open_sans_regular"
             android:text="@string/sign_upbtn"
             android:textColor="@android:color/white"
+            android:textSize="12sp"
             android:textStyle="italic" />
 
     </LinearLayout>
