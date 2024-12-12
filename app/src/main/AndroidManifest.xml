@@ -27,6 +27,9 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".SignInActivity" />
 
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
+            android:value="\242661593648" />
     </application>
 
 </manifest>

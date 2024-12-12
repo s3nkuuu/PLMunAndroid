@@ -1,18 +1,29 @@
 package com.example.plmunandroid;
 
+import static android.app.PendingIntent.getActivity;
+import static android.content.Context.MODE_PRIVATE;
+import static androidx.core.content.ContentProviderCompat.requireContext;
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
-
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileFragment extends Fragment {
 
@@ -20,17 +31,41 @@ public class ProfileFragment extends Fragment {
     private MaterialButton btnUserInfo;
     private MaterialButton btnHelpSupport;
     private MaterialButton btnAbout;
+    private TextView user_email;
+    private TextView user_name;
+
+    private GoogleSignInClient googleSignInClient;  // Add GoogleSignInClient for sign-out
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Initialize all buttons
+        // Initialize views
         btnLogout = view.findViewById(R.id.btn_logout);
         btnUserInfo = view.findViewById(R.id.btn_user_info);
         btnHelpSupport = view.findViewById(R.id.btn_help_support);
         btnAbout = view.findViewById(R.id.btn_about);
+        user_email = view.findViewById(R.id.user_email);
+        user_name = view.findViewById(R.id.user_name);
+
+        // Retrieve the email from SharedPreferences
+        SharedPreferences preferences = requireContext().getSharedPreferences("user_prefs", MODE_PRIVATE);
+        String email = preferences.getString("user_email", "");
+        Log.d("ProfileFragment", "Received Email: " + email);  // Make sure it's logged correctly
+
+        // Set the email in the TextView
+        user_email.setText(email);
+
+        // Update the username based on the email domain
+        if (email.endsWith("@plmun.edu.ph")) {
+            user_name.setText("STUDENT");
+        } else {
+            user_name.setText("GUEST");
+        }
+
+        // Initialize GoogleSignInClient for Google logout
+        googleSignInClient = GoogleSignIn.getClient(requireContext(), GoogleSignInOptions.DEFAULT_SIGN_IN);
 
         // Set click listeners
         btnLogout.setOnClickListener(v -> showLogoutConfirmationDialog());
@@ -45,7 +80,6 @@ public class ProfileFragment extends Fragment {
         try {
             UserProfileFragment userProfileFragment = new UserProfileFragment();
             FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-
             transaction.replace(R.id.frame_layout, userProfileFragment);
             transaction.addToBackStack(null);  // Allows back navigation
             transaction.commit();
@@ -55,14 +89,11 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-
     private void navigateToHelpSupport() {
-        // TODO: navigation to Help & Support screen
         Toast.makeText(requireContext(), "Help & Support Coming Soon", Toast.LENGTH_SHORT).show();
     }
 
     private void navigateToAbout() {
-        // TODO: navigation to About screen
         Toast.makeText(requireContext(), "About Coming Soon", Toast.LENGTH_SHORT).show();
     }
 
@@ -77,22 +108,34 @@ public class ProfileFragment extends Fragment {
 
     private void performLogout() {
         try {
-            // Clear any saved user data or preferences
-            // SharedPreferences preferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
-            // preferences.edit().clear().apply();
+            // Sign the user out from Firebase
+            FirebaseAuth.getInstance().signOut();
 
-            // Create intent to start SignInActivity
-            Intent intent = new Intent(requireContext(), SignInActivity.class);
-            // Clear the back stack so user can't go back after logout
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            // Sign out from Google
+            googleSignInClient.signOut()
+                    .addOnCompleteListener(requireActivity(), task -> {
+                        if (task.isSuccessful()) {
+                            // Clear SharedPreferences
+                            SharedPreferences preferences = requireContext().getSharedPreferences("user_prefs", MODE_PRIVATE);
+                            preferences.edit().clear().apply();  // Clear preferences
 
-            Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+                            // Redirect the user to the SignInActivity to log in again
+                            Intent intent = new Intent(requireContext(), SignInActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
+                            startActivity(intent);
 
-            // Finish the current activity
-            if (getActivity() != null) {
-                getActivity().finish();
-            }
+                            // Optionally, display a success message
+                            Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+
+                            // Finish the current activity to prevent navigating back to the profile page
+                            if (getActivity() != null) {
+                                getActivity().finish();
+                            }
+                        } else {
+                            Toast.makeText(requireContext(), "Error logging out from Google", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
         } catch (Exception e) {
             Toast.makeText(requireContext(), "Error logging out", Toast.LENGTH_SHORT).show();
             e.printStackTrace();

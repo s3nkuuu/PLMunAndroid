@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        String email = getIntent().getStringExtra("user_email");
+        Log.d("MainActivity", "Received Email: " + email);
 
         boolean showRLRCInfo = getIntent().getBooleanExtra(EXTRA_SHOW_RLRC_INFO, false);
 
