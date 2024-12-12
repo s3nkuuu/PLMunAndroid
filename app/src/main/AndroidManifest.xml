@@ -29,7 +29,8 @@
 
         <meta-data
             android:name="com.google.android.gms.games.APP_ID"
-            android:value="\411965633498" /> <!--242661593648 -->
+            android:value="\242661593648" />
+        <!-- jhay android:value="\411965633498"-->
     </application>
 
 </manifest>
