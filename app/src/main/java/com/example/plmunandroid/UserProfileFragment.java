@@ -1,5 +1,7 @@
 package com.example.plmunandroid;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +38,6 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        editUsername = view.findViewById(R.id.edit_username);
         editStudentNumber = view.findViewById(R.id.edit_student_number);
         editEmail = view.findViewById(R.id.edit_email);
         editPassword = view.findViewById(R.id.edit_password);
@@ -50,18 +51,18 @@ public class UserProfileFragment extends Fragment {
     }
 
     private void loadUserData() {
-        // TODO: Load user data from data source (SharedPreferences, Database, etc.)
         try {
-            // Example using SharedPreferences:
-            // SharedPreferences prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
-            // editUsername.setText(prefs.getString("username", ""));
-            // editStudentNumber.setText(prefs.getString("student_number", ""));
-            // editEmail.setText(prefs.getString("email", ""));
+            SharedPreferences prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
 
-            // static placeholder data
-//            editUsername.setText("s3nkuuu");
-//            editStudentNumber.setText("22143089");
-//            editEmail.setText("callejajhay-em_bsit@plmun.edu.ph");
+            // Load user details from SharedPreferences
+            String username = prefs.getString("username", "");
+            String studentNumber = prefs.getString("student_number", "");
+            String email = prefs.getString("user_email", "");
+
+            // Set the loaded values to the input fields
+            editUsername.setText(username);
+            editStudentNumber.setText(studentNumber);
+            editEmail.setText(email);
         } catch (Exception e) {
             Toast.makeText(requireContext(), "Error loading user data", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -81,14 +82,13 @@ public class UserProfileFragment extends Fragment {
             String email = editEmail.getText().toString().trim();
             String password = editPassword.getText().toString().trim();
 
-            // TODO: Save the data to preferred storage
-            // Example using SharedPreferences:
-            // SharedPreferences prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
-            // SharedPreferences.Editor editor = prefs.edit();
-            // editor.putString("username", username);
-            // editor.putString("student_number", studentNumber);
-            // editor.putString("email", email);
-            // editor.apply();
+            // Save to SharedPreferences
+            SharedPreferences prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("username", username);
+            editor.putString("student_number", studentNumber);
+            editor.putString("user_email", email);
+            editor.apply();
 
             Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
 

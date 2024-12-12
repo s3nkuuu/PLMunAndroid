@@ -113,14 +113,34 @@ public class SignInActivity extends AppCompatActivity {
             Toast.makeText(SignInActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
         } else {
             if (verifyCredentials(studentNumber, password)) {
+                // Retrieve email from database
+                String email = getEmailForStudentNumber(studentNumber);
+
+                // Save both student number and email
+                saveUserDetailsToSharedPreferences(studentNumber, email);
+
                 Toast.makeText(SignInActivity.this, "Sign-In Successful", Toast.LENGTH_SHORT).show();
-                // Save the email or user identifier after successful sign-in
-                saveEmailToSharedPreferences(studentNumber);  // Or save the actual email if applicable
-                navigateToMainActivity(null);
+                navigateToMainActivity(email);
             } else {
                 Toast.makeText(SignInActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private String getEmailForStudentNumber(String studentNumber) {
+        Cursor cursor = databaseHelper.getAllUsers();
+        String email = "";
+
+        while (cursor.moveToNext()) {
+            @SuppressLint("Range") String dbStudentNumber = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_STUDENT_NUMBER));
+            @SuppressLint("Range") String dbEmail = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_EMAIL));
+            if (dbStudentNumber.equals(studentNumber)) {
+                email = dbEmail;
+                break;
+            }
+        }
+        cursor.close();
+        return email;
     }
 
     private boolean verifyCredentials(String studentNumber, String password) {
@@ -169,18 +189,40 @@ public class SignInActivity extends AppCompatActivity {
                         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(SignInActivity.this);
                         if (account != null) {
                             String email = account.getEmail();
-                            saveEmailToSharedPreferences(email);  // Save email to SharedPreferences
-                            navigateToMainActivity(email);  // Pass email to ProfileFragment
+                            // Extract student number if possible (you might need to modify this)
+                            String studentNumber = extractStudentNumberFromEmail(email);
+
+                            // Save both email and student number
+                            saveUserDetailsToSharedPreferences(studentNumber, email);
+                            navigateToMainActivity(email);
                         }
                     } else {
                         Toast.makeText(SignInActivity.this, "Google sign-in failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
+
+    private String extractStudentNumberFromEmail(String email) {
+        // This is a simple extraction method. Adjust based on your email format
+        // Assumes email is like 22143089@plmun.edu.ph
+        if (email != null && email.contains("@")) {
+            return email.split("@")[0];
+        }
+        return "";
+    }
+
     private void saveEmailToSharedPreferences(String email) {
         SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("user_email", email);  // Save email to SharedPreferences
+        editor.apply();
+    }
+
+    private void saveUserDetailsToSharedPreferences(String studentNumber, String email) {
+        SharedPreferences preferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("student_number", studentNumber);
+        editor.putString("user_email", email);
         editor.apply();
     }
 }
