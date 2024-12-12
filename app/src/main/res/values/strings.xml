@@ -5,5 +5,6 @@
     <string name="rooms">Rooms</string>
     <string name="sign_inbtn">Already have an account? <u>Sign In</u></string>
     <string name="sign_upbtn">Dont have an account? <u>Sign Up</u></string>
-    <string name="web_id">411965633498-472894vjvsml2ilsa3up64afe9rf07ud.apps.googleusercontent.com</string> <!-- 242661593648-uefhs19g7d4rl3i0vf5vi63qvs4nkdhd.apps.googleusercontent.com -->
+    <!-- jhay <string name="web_id">411965633498-472894vjvsml2ilsa3up64afe9rf07ud.apps.googleusercontent.com</string>-->
+    <string name="web_id">242661593648-uefhs19g7d4rl3i0vf5vi63qvs4nkdhd.apps.googleusercontent.com</string>
 </resources>
