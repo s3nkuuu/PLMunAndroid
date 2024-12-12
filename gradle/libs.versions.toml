@@ -13,6 +13,7 @@ googlePlay = "21.3.0"
 firebaseDatabase = "21.0.0"
 firebaseAuth = "23.1.0"
 googleGmsGoogleServices = "4.4.2"
+firebaseCommon = "21.0.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -28,6 +29,7 @@ google = { group = "com.google.android.gms", name = "play-services-auth", versio
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version = "33.7.0" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+firebase-common = { group = "com.google.firebase", name = "firebase-common", version.ref = "firebaseCommon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
