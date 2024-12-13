@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private EditText etStudentNum, etEmail, etUsername, etPassword, etConfirmPassword;
+    private EditText etStudentNum, etPassword, etConfirmPassword;
     private Button btnSignUp;
     private TextView tvSignIn;
     private DatabaseHelper databaseHelper;
@@ -24,7 +24,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Initialize views
         etStudentNum = findViewById(R.id.studentNumber);
-        etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         btnSignUp = findViewById(R.id.btnSignUp);
@@ -36,12 +35,10 @@ public class SignUpActivity extends AppCompatActivity {
             // Validate and register user
             if (validateInputs()) {
                 String studentNumber = etStudentNum.getText().toString().trim();
-                String email = etEmail.getText().toString().trim();
-                String username = etUsername.getText().toString().trim();
                 String password = etPassword.getText().toString().trim();
 
                 // Insert user with all details
-                databaseHelper.insertUser(studentNumber, password, email, username);
+                databaseHelper.insertUser(studentNumber, password);
 
                 Toast.makeText(SignUpActivity.this, "Sign-Up Successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(this, SignInActivity.class);
@@ -64,26 +61,6 @@ public class SignUpActivity extends AppCompatActivity {
         String studentNumber = etStudentNum.getText().toString().trim();
         if (studentNumber.isEmpty()) {
             etStudentNum.setError("Student number is required");
-            isValid = false;
-        }
-
-        // Validate Email
-        String email = etEmail.getText().toString().trim();
-        if (email.isEmpty()) {
-            etEmail.setError("Email is required");
-            isValid = false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Please enter a valid email address");
-            isValid = false;
-        } else if (!email.endsWith("@plmun.edu.ph")) {
-            etEmail.setError("Please use your institutional email");
-            isValid = false;
-        }
-
-        // Validate Username
-        String username = etUsername.getText().toString().trim();
-        if (username.isEmpty()) {
-            etUsername.setError("Username is required");
             isValid = false;
         }
 

@@ -44,13 +44,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Updated insert user method to include email and username
-    public void insertUser(String studentNumber, String password, String email, String username) {
+    public void insertUser(String studentNumber, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_STUDENT_NUMBER, studentNumber);
         values.put(COLUMN_PASSWORD, password);
-        values.put(COLUMN_EMAIL, email);
-        values.put(COLUMN_USERNAME, username);
         db.insert(TABLE_USERS, null, values);
         db.close();
     }
@@ -72,4 +70,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_STUDENT_NUMBER + " = ?",
                 new String[]{studentNumber});
     }
+
 }
