@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/sign"
     android:padding="16dp">
 
@@ -65,17 +66,27 @@
             android:textColor="@android:color/white"
             android:textColorHint="@android:color/white" />
 
-        <EditText
-            android:id="@+id/etPassword"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="24dp"
-            android:background="@drawable/edit_text_bg"
             android:hint="Password"
-            android:inputType="textPassword"
-            android:padding="12dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white" />
+            android:textColorHint="@color/white"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/white"
+            app:startIconTint="@color/primary">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:background="@drawable/edit_text_bg"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:padding="12dp"
+                android:textSize="18sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSignIn"
@@ -129,19 +140,6 @@
                 android:clickable="true"
                 android:focusable="true" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/withoutAcc"
-            android:layout_width="210dp"
-            android:layout_height="41dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/edit_text_bg"
-            android:padding="5dp"
-            android:text="Continue without an account"
-            android:textColor="@color/white"
-            android:textColorHint="@android:color/white"
-            android:textSize="12sp" />
-
         <TextView
             android:id="@+id/tvSignUp"
             android:layout_width="wrap_content"

@@ -3,6 +3,7 @@ package com.example.plmunandroid;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,10 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
 
 public class UserProfileFragment extends Fragment {
-    private TextInputEditText editUsername;
     private TextInputEditText editStudentNumber;
     private TextInputEditText editEmail;
     private TextInputEditText editPassword;
@@ -23,14 +23,15 @@ public class UserProfileFragment extends Fragment {
     private FloatingActionButton btnChangePhoto;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.user_info, container, false);
 
         // Initialize views
         initViews(view);
+
         // Setup listeners
         setupListeners();
+
         // Load user data
         loadUserData();
 
@@ -52,17 +53,22 @@ public class UserProfileFragment extends Fragment {
 
     private void loadUserData() {
         try {
-            SharedPreferences prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+            SharedPreferences preferences = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
+            String email = preferences.getString("user_email", "");
+            Log.d("UserProfileFragment", "Loaded Email: " + email);
 
-            // Load user details from SharedPreferences
-            String username = prefs.getString("username", "");
-            String studentNumber = prefs.getString("student_number", "");
-            String email = prefs.getString("user_email", "");
-
-            // Set the loaded values to the input fields
-            editUsername.setText(username);
-            editStudentNumber.setText(studentNumber);
+            // Set the email in the TextInputEditText
             editEmail.setText(email);
+
+            // Update the username based on the email domain
+            if (email.endsWith("@plmun.edu.ph")) {
+                editStudentNumber.setText("STUDENT");
+                editPassword.setText("");
+            } else {
+                editStudentNumber.setText("GUEST");
+                editPassword.setText("NA");
+            }
+
         } catch (Exception e) {
             Toast.makeText(requireContext(), "Error loading user data", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -71,30 +77,18 @@ public class UserProfileFragment extends Fragment {
 
     private void saveUserProfile() {
         try {
-            // Validate inputs
             if (!validateInputs()) {
                 return;
             }
 
-            // Get values from input fields
-            String username = editUsername.getText().toString().trim();
-            String studentNumber = editStudentNumber.getText().toString().trim();
             String email = editEmail.getText().toString().trim();
-            String password = editPassword.getText().toString().trim();
 
-            // Save to SharedPreferences
             SharedPreferences prefs = requireContext().getSharedPreferences("user_prefs", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("username", username);
-            editor.putString("student_number", studentNumber);
             editor.putString("user_email", email);
             editor.apply();
 
             Toast.makeText(requireContext(), "Profile updated successfully", Toast.LENGTH_SHORT).show();
-
-            // back to previous screen
-            requireActivity().getSupportFragmentManager().popBackStack();
-
         } catch (Exception e) {
             Toast.makeText(requireContext(), "Error saving profile", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -103,18 +97,6 @@ public class UserProfileFragment extends Fragment {
 
     private boolean validateInputs() {
         boolean isValid = true;
-
-        // Validate Username
-        if (editUsername.getText().toString().trim().isEmpty()) {
-            editUsername.setError("Username is required");
-            isValid = false;
-        }
-
-        // Validate Student Number
-        if (editStudentNumber.getText().toString().trim().isEmpty()) {
-            editStudentNumber.setError("Student number is required");
-            isValid = false;
-        }
 
         // Validate Email
         String email = editEmail.getText().toString().trim();
@@ -129,22 +111,10 @@ public class UserProfileFragment extends Fragment {
             isValid = false;
         }
 
-        // Validate Password
-        String password = editPassword.getText().toString();
-        if (!password.isEmpty() && password.length() < 8) {
-            editPassword.setError("Password must be at least 8 characters");
-            isValid = false;
-        }
-
         return isValid;
     }
 
     private void handlePhotoChange() {
-        // TODO: Implement photo change functionality
-        // This could involve:
-        // 1. Opening camera
-        // 2. Opening gallery
-        // 3. Showing a bottom sheet with options
         Toast.makeText(requireContext(), "Photo change feature coming soon", Toast.LENGTH_SHORT).show();
     }
 }
