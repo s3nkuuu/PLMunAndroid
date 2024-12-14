@@ -67,25 +67,25 @@
             android:textColorHint="@android:color/white" />
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            android:hint="Password"
-            android:textColor="@android:color/white"
-            android:textColorHint="@color/white"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/edit_text_bg"
+            app:hintEnabled="false"
             app:endIconMode="password_toggle"
-            app:endIconTint="@color/white"
-            app:startIconTint="@color/primary">
+            app:endIconTint="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
-                android:background="@drawable/edit_text_bg"
                 android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
                 android:inputType="textPassword"
+                android:hint="Password"
                 android:padding="12dp"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button

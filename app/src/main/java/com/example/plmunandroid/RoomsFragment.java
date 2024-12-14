@@ -40,6 +40,22 @@ public class RoomsFragment extends Fragment {
         noResultsText = view.findViewById(R.id.no_results_text);
         chipGroup = view.findViewById(R.id.chip_group);
 
+        // Set up navigation buttons
+        view.findViewById(R.id.navigate_button).setOnClickListener(v ->
+                navigateToRoom("Library", "Rizal Building", "1st Floor"));
+
+        view.findViewById(R.id.navigate_button_lab).setOnClickListener(v ->
+                navigateToRoom("Computer Laboratory 1", "Bonifacio Building", "2nd Floor"));
+
+        view.findViewById(R.id.navigate_button_audi).setOnClickListener(v ->
+                navigateToRoom("Heroes Hall", "Rizal Building", "3rd Floor"));
+
+        view.findViewById(R.id.navigate_button_science).setOnClickListener(v ->
+                navigateToRoom("CITCS Faculty", "Bonifacio Building", "2nd Floor"));
+
+        view.findViewById(R.id.navigate_button_cafe).setOnClickListener(v ->
+                navigateToRoom("Medical Clinic", "Bonifacio Building", "1st Floor"));
+
         // Rooms tab as selected
         if (tabLayout.getTabAt(1) != null) {
             tabLayout.getTabAt(1).select();
@@ -66,7 +82,7 @@ public class RoomsFragment extends Fragment {
             }
         });
 
-        // text change listener for search box
+        // Text change listener for search box
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -82,7 +98,7 @@ public class RoomsFragment extends Fragment {
             }
         });
 
-        // chip selection listener
+        // Chip selection listener
         chipGroup.setOnCheckedChangeListener((group, checkedId) -> {
             Chip chip = view.findViewById(checkedId);
             if (chip != null) {
@@ -92,6 +108,16 @@ public class RoomsFragment extends Fragment {
         });
 
         return view;
+    }
+
+    // Function to navigate to a room
+    private void navigateToRoom(String roomName, String building, String floor) {
+        NavigationFragment navigationFragment = NavigationFragment.newInstance(roomName, building, floor);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.frame_layout, navigationFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     // Filter function to search for rooms
@@ -148,7 +174,7 @@ public class RoomsFragment extends Fragment {
         }
     }
 
-    // function to show all room cards
+    // Function to show all room cards
     private void showAllRooms() {
         roomCard1.setVisibility(View.VISIBLE);
         roomCard2.setVisibility(View.VISIBLE);
