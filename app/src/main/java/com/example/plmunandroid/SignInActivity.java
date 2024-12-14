@@ -3,7 +3,9 @@ package com.example.plmunandroid;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -112,6 +114,9 @@ public class SignInActivity extends AppCompatActivity {
         if (studentNumber.isEmpty() || password.isEmpty()) {
             Toast.makeText(SignInActivity.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
         } else {
+            // Add detailed logging
+            Log.d("SignIn", "Attempting sign-in with Student Number: " + studentNumber);
+
             if (verifyCredentials(studentNumber, password)) {
                 // Retrieve email from database
                 String email = getEmailForStudentNumber(studentNumber);
@@ -123,42 +128,75 @@ public class SignInActivity extends AppCompatActivity {
                 navigateToMainActivity(email);
             } else {
                 Toast.makeText(SignInActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+
+                // Additional debugging: Check if user exists
+                checkUserExists(studentNumber);
             }
         }
     }
 
-    private String getEmailForStudentNumber(String studentNumber) {
-        Cursor cursor = databaseHelper.getAllUsers();
-        String email = "";
+    private void checkUserExists(String studentNumber) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.query(
+                DatabaseHelper.TABLE_USERS,
+                null,
+                DatabaseHelper.COLUMN_STUDENT_NUMBER + " = ?",
+                new String[]{studentNumber},
+                null, null, null
+        );
 
-        while (cursor.moveToNext()) {
-            @SuppressLint("Range") String dbStudentNumber = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_STUDENT_NUMBER));
-            @SuppressLint("Range") String dbEmail = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_EMAIL));
-            if (dbStudentNumber.equals(studentNumber)) {
-                email = dbEmail;
-                break;
+        Log.d("SignIn", "User exists check - Rows found: " + cursor.getCount());
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            // Log all columns for debugging
+            for (String columnName : cursor.getColumnNames()) {
+                int columnIndex = cursor.getColumnIndex(columnName);
+                String value = cursor.getString(columnIndex);
+                Log.d("SignIn", columnName + ": " + value);
             }
+        }
+
+        cursor.close();
+    }
+
+    private String getEmailForStudentNumber(String studentNumber) {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.query(
+                DatabaseHelper.TABLE_USERS,
+                new String[]{DatabaseHelper.COLUMN_EMAIL},
+                DatabaseHelper.COLUMN_STUDENT_NUMBER + " = ?",
+                new String[]{studentNumber},
+                null, null, null
+        );
+
+        String email = "";
+        if (cursor.moveToFirst()) {
+            int emailIndex = cursor.getColumnIndex(DatabaseHelper.COLUMN_EMAIL);
+            email = cursor.getString(emailIndex);
         }
         cursor.close();
         return email;
     }
 
     private boolean verifyCredentials(String studentNumber, String password) {
-        Cursor cursor = databaseHelper.getAllUsers();
-        boolean isValid = false;
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor cursor = db.query(
+                DatabaseHelper.TABLE_USERS,
+                new String[]{DatabaseHelper.COLUMN_STUDENT_NUMBER},
+                DatabaseHelper.COLUMN_STUDENT_NUMBER + " = ? AND " + DatabaseHelper.COLUMN_PASSWORD + " = ?",
+                new String[]{studentNumber, password},
+                null, null, null
+        );
 
-        while (cursor.moveToNext()) {
-            @SuppressLint("Range") String dbStudentNumber = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_STUDENT_NUMBER));
-            @SuppressLint("Range") String dbPassword = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_PASSWORD));
-            if (dbStudentNumber.equals(studentNumber) && dbPassword.equals(password)) {
-                isValid = true;
-                break;
-            }
-        }
+        boolean isValid = cursor.getCount() > 0;
+
+        // Debugging: Log the number of matching rows
+        Log.d("SignIn", "Matching rows: " + cursor.getCount());
+
         cursor.close();
         return isValid;
     }
-
 
     private void navigateToSignUp() {
         Intent intent = new Intent(this, SignUpActivity.class);
